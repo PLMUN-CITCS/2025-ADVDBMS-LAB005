@@ -166,10 +166,10 @@ Only perform this if this is the first time you will setup your Git Environment
       - Save the `delete_student.sql` file.
    
    5. Executing the SQL Scripts:
-   - Open your SQL client and connect to the UniversityDB database.
-   - Insert Records: Execute the insert_students.sql script.
-   - Update Email: Execute the update_student_email.sql script.
-   - Delete Record: Execute the delete_student.sql script.
+   - Open your SQL client and connect to the `UniversityDB` database.
+   - Insert Records: Execute the `insert_students.sql` script.
+   - Update Email: Execute the `update_student_email.sql` script.
+   - Delete Record: Execute the `delete_student.sql` script.
 
 ### **Step 4: Push Changes to GitHub**
 Once you've completed your changes, follow these steps to upload your work to your GitHub repository.
