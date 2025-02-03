@@ -1,7 +1,7 @@
 2025-ADVDBMS-WK02S0E02
 Week 02 - Review on Database Concepts
 
-Exercise # 02 - Guided Coding Exercise: Creating and Modifying a Table
+Exercise # 03 - Guided Coding Exercise: Inserting, Updating, and Deleting Records
 
 ## **Instructions**
 
@@ -77,71 +77,99 @@ Only perform this if this is the first time you will setup your Git Environment
 
 ### **Step 3: Complete the Assignment**
 
-**Exercise # 02 - Guided Coding Exercise: Creating and Modifying a Table**
+**Exercise # 03 - Guided Coding Exercise: Inserting, Updating, and Deleting Records**
 
    **Objective:**
-   Practice creating a table with various SQL data types and constraints, then altering its structure by adding a new column. This exercise reinforces SQL DDL (Data Definition Language) commands.
+   Learn how to insert, update, and delete data within a table using SQL DML (Data Manipulation Language) commands. This exercise builds upon the Students table created in the previous exercise.
 
    **Folder Structure:**
    ```
    university_db/
-   ├── create_students_table.sql
-   └── alter_students_table.sql
+   ├── insert_students.sql
+   ├── update_student_email.sql
+   └── delete_student.sql
    ```
 
    **File Naming Convention:**
-   - `create_students_table.sql`: Contains the SQL statement for creating the `Students` table.
-   - `alter_students_table.sql`: Contains the SQL statement for altering the `Students` table.
+   - `insert_students.sql`: Contains the SQL statements for inserting student records.
+   - `update_student_email.sql`: Contains the SQL statement for updating a student's email.
+   - `delete_student.sql`: Contains the SQL statement for deleting a student record.
 
    **Notable Observations (to be discussed after completing the exercise):**
-   - Data Types: This exercise uses `INT`, `VARCHAR`, and `DATE` data types. Explore other data types available in your SQL system (e.g., `TEXT`, `BOOLEAN`, `DATETIME`, `DECIMAL`).
-   - Constraints: The `PRIMARY KEY` and `NOT NULL` constraints are used. Investigate other constraints like `UNIQUE`, `CHECK`, and `FOREIGN KEY`.
-   - AUTO_INCREMENT/SERIAL/IDENTITY: Pay close attention to the syntax for auto-incrementing primary keys as it varies between database systems.
-   - `ALTER TABLE`: The `ALTER TABLE` command is powerful and can be used to add, modify, or drop columns, constraints, and even the table itself.
-   - Database Design: After creating the table, the next step would be to insert data into it using the `INSERT` statement. You can then practice querying the data using `SELECT` statements.
-   - SQL Syntax: Always refer to the documentation for your specific database management system for the most accurate and up-to-date syntax.
-   - Idempotency: It's good practice to make your scripts idempotent where possible. For example, you could add a check in the alter_students_table.sql script to see if the Email column already exists before adding it. This prevents errors if the script is run multiple times. (Example: IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Students' AND COLUMN_NAME = 'Email') THEN ALTER TABLE Students ADD Email VARCHAR(100); END IF; - This example is MySQL specific and you will need to change it based on your database system.)
+   - Primary Keys: This exercise highlights the importance of primary keys for uniquely identifying records. Always use primary keys in `WHERE` clauses for `UPDATE` and `DELETE` statements whenever possible.
+   - WHERE Clause: The `WHERE` clause is crucial for specifying which records to update or delete. Be very careful when constructing WHERE clauses to avoid unintended modifications or deletions.
+   - Data Integrity: Think about how constraints (like `NOT NULL`) affect data manipulation. For example, you wouldn't be able to insert a record without values for FirstName and LastName if those columns have a NOT NULL constraint.
+   - SQL Syntax: Double-check the syntax for your specific SQL database system.
+   - Transactions: For more complex operations, you might want to use transactions to ensure data consistency. Transactions allow you to group multiple SQL statements together and either commit them all at once or roll them back if an error occurs.
+   - Select Statements: After performing these operations, use `SELECT * FROM Students;` to view the contents of the table and verify the changes. This is a good way to check your work.
       
    **Step-by-Step Instructions:**
 
    1. Setting up the Environment
-      - Ensure you have a SQL database management system installed (e.g., MySQL, PostgreSQL, SQL Server). This exercise will use generic SQL syntax, but you might need to adjust slightly depending on your specific DBMS.
+      - Ensure you have a SQL database management system installed and that you've connected to the `UniversityDB` database (created in Problem 1) and created the `Students` table (created in Problem 2).
       - If you haven't already, execute the `create_and_use_db.sql` script from the previous exercise to create and select the `UniversityDB` database. This ensures your new table is created in the correct database.
       - Create the two SQL files as shown in the folder structure above within the `university_db` directory.
       
-   2. `create_students_table.sql` (Create Students Table):
-      - Open `create_students_table`.sql in a text editor.
+   2. `insert_students.sql` (Insert Students Table):
+      - Open `insert_students`.sql in a text editor.
       - Create the Database:
       ```SQL
-      -- Step 1: Create the Students table with constraints
-      CREATE TABLE Students (
-         StudentID INT PRIMARY KEY AUTO_INCREMENT,  -- MySQL Example: AUTO_INCREMENT
-         -- For other databases (e.g., PostgreSQL, SQL Server) you might use SERIAL or IDENTITY
-         FirstName VARCHAR(50) NOT NULL,
-         LastName VARCHAR(50) NOT NULL,
-         EnrollmentDate DATE
-      );
+      -- Step 1: Insert student records into the Students table
+      INSERT INTO Students (FirstName, LastName, EnrollmentDate, Email)  -- StudentID is auto-incremented
+      VALUES
+      ('Alice', 'Smith', '2023-09-01', 'alice.smith@example.com'),
+      ('Bob', 'Johnson', '2023-09-01', 'bob.johnson@example.com'),
+      ('Charlie', 'Lee', '2023-09-01', 'charlie.lee@example.com');
+      
+      -- Alternative (if StudentID is NOT auto-incremented and you manage the IDs yourself):
+      -- INSERT INTO Students (StudentID, FirstName, LastName, EnrollmentDate, Email)
+      -- VALUES
+      --     (1, 'Alice', 'Smith', '2023-09-01', 'alice.smith@example.com'),
+      --     (2, 'Bob', 'Johnson', '2023-09-01', 'bob.johnson@example.com'),
+      --     (3, 'Charlie', 'Lee', '2023-09-01', 'charlie.lee@example.com');
       ```
       
-      - Important Note: The `AUTO_INCREMENT` keyword is specific to MySQL. Other database systems have different ways of handling auto-incrementing primary keys:
-         - PostgreSQL: `SERIAL` or `BIGSERIAL` data types. Example: `StudentID SERIAL PRIMARY KEY`
-         - SQL Server: IDENTITY(1,1) Example: StudentID INT IDENTITY(1,1) PRIMARY KEY
-         - Consult the documentation for your specific database for the correct syntax.
-      
-   3. `alter_students_table.sql` (Alter Students Table):
-      - Open `alter_students_table.sql` in a text editor.
-      - Alter the table:
-      ```SQL
-      -- Step 2: Alter the table to add an Email column
-      ALTER TABLE Students
-      ADD Email VARCHAR(100);
-      ```
-      - Save the `alter_students_table.sql` file.
+      - Important Note: Because `StudentID` is (or should be) an auto-incrementing primary key, you generally should not include it in the `INSERT` statement's column list. The database will automatically assign the next available ID. The alternative example is only provided for the rare case that you are managing the primary keys yourself.
 
-   4. Executing the SQL Scripts:
-      - Open your SQL client and connect to the `UniversityDB` database.
-      - Create Table: Execute the `create_students_table.sql` script. This will create the `Students` table.
-      - Alter Table: Execute the `alter_students_table.sql` script. This will add the `Email` column to the `Students` table.
+      - Save the `insert_students.sql` file.
+      
+   3. `update_student_email.sql` (Update Student Email):
+      - Open `update_student_email.sql` in a text editor.
+      - Update Bob Johnson's email:
+      ```SQL
+      -- Step 2: Update the Email for Bob Johnson
+      UPDATE Students
+      SET Email = 'bob.j@example.com'
+      WHERE FirstName = 'Bob' AND LastName = 'Johnson';  -- More robust WHERE clause
+      
+      -- Alternative using StudentID (preferred if you know the ID):
+      -- UPDATE Students
+      -- SET Email = 'bob.j@example.com'
+      -- WHERE StudentID = 2;  -- Replace 2 with Bob's actual StudentID
+      ```
+      - Important Note: It's generally better practice to use the `StudentID` in the `WHERE` clause of an `UPDATE` statement if you know it. This is because it is the primary key and is guaranteed to be unique. Using other columns (like FirstName and LastName) might accidentally update multiple rows if there are duplicate names.
+      - Save the `update_student_email.sql` file.
+
+   4. `delete_student.sql` (Delete Student):
+      - Open `delete_student.sql` in a text editor.
+      - Delete Charlie Lee's record:
+      ```SQL
+      -- Step 3: Delete the record for Charlie Lee
+      DELETE FROM Students
+      WHERE FirstName = 'Charlie' AND LastName = 'Lee'; -- More robust WHERE clause
+      
+      -- Alternative using StudentID (preferred if you know the ID):
+      -- DELETE FROM Students
+      -- WHERE StudentID = 3;  -- Replace 3 with Charlie's actual StudentID
+      ```
+      - Important Note: Similar to the `UPDATE` statement, it's best practice to use the `StudentID` in the `WHERE` clause of a `DELETE` statement to ensure you're deleting the correct record.
+      - Save the `delete_student.sql` file.
+   
+   5. Executing the SQL Scripts:
+   - Open your SQL client and connect to the UniversityDB database.
+   - Insert Records: Execute the insert_students.sql script.
+   - Update Email: Execute the update_student_email.sql script.
+   - Delete Record: Execute the delete_student.sql script.
 
 ### **Step 4: Push Changes to GitHub**
 Once you've completed your changes, follow these steps to upload your work to your GitHub repository.
@@ -165,7 +193,7 @@ Once you've completed your changes, follow these steps to upload your work to yo
    Write a meaningful commit message:
    
    ```bash
-   git commit -m "Submitting ADVDBMS Week 02 - Session 01 - Exercise 01"
+   git commit -m "Submitting ADVDBMS Week 02 - Session 01 - Exercise 03"
    ```
    
 4. Push your changes to GitHub:
