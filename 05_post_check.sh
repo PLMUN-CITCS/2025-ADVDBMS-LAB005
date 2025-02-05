@@ -25,9 +25,8 @@ else
 fi
 
 # Verify Alice's data
-alice_data=$(execute_sql "SELECT FirstName, LastName, Email FROM Students WHERE FirstName = 'Alice';" | tail -n 1 | tr -s '[:space:]' '\t' | sed 's/^[ \t]*//;s/[ \t]*$//') # Trim whitespace
-expected_alice_data="Alice\tSmith\talice.smith@example.com"
-
+alice_data=$(execute_sql "SELECT FirstName, LastName, Email FROM Students WHERE FirstName = 'Alice';" | tail -n 1)
+expected_alice_data="Alice\tSmith\talice.smith@example.com"  # Tab-separated values
 if [[ "$alice_data" == "$expected_alice_data" ]]; then
   echo "Alice's data validation passed."
 else
