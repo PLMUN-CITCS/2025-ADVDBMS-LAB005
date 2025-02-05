@@ -114,6 +114,8 @@ Only perform this if this is the first time you will setup your Git Environment
       - Open `insert_students`.sql in a text editor.
       - Create the Database:
       ```SQL
+      USE `UniversityDB`;
+
       -- Step 1: Insert student records into the `Students` table
       INSERT INTO `Students` (`FirstName`, `LastName`, `EnrollmentDate`, `Email`)  -- StudentID is auto-incremented
       VALUES
@@ -129,7 +131,6 @@ Only perform this if this is the first time you will setup your Git Environment
       --     (3, 'Charlie', 'Lee', '2023-09-01', 'charlie.lee@example.com');
 
       ```
-      
       - Important Note: Because `StudentID` is (or should be) an auto-incrementing primary key, you generally should not include it in the `INSERT` statement's column list. The database will automatically assign the next available ID. The alternative example is only provided for the rare case that you are managing the primary keys yourself.
 
       - Save the `insert_students.sql` file.
@@ -138,6 +139,8 @@ Only perform this if this is the first time you will setup your Git Environment
       - Open `update_student_email.sql` in a text editor.
       - Update Bob Johnson's email:
       ```SQL
+      USE `UniversityDB`;
+
       -- Step 2: Update the Email for Bob Johnson
       UPDATE `Students`
       SET `Email` = 'bob.j@example.com'
@@ -156,6 +159,8 @@ Only perform this if this is the first time you will setup your Git Environment
       - Open `delete_student.sql` in a text editor.
       - Delete Charlie Lee's record:
       ```SQL
+      USE `UniversityDB`;
+
       -- Step 3: Delete the record for Charlie Lee
       DELETE FROM `Students`
       WHERE `FirstName` = 'Charlie' AND `LastName` = 'Lee'; -- More robust WHERE clause
