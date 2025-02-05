@@ -4,10 +4,11 @@
 DB_HOST="${DB_HOST:-127.0.0.1}"  # Default to 127.0.0.1 if not set
 DB_PORT="${DB_PORT:-4000}"      # Default to 4000 if not set
 DB_USER="${DB_USER:-root}"      # Default to root if not set
+DB_NAME="${DB_NAME:-UniversityDB}"      # Default to root if not set
 
 # Function to execute SQL queries and handle errors
 execute_sql() {
-  mysql -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -e "$1"
+  mysql -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -D "$DB_NAME" -e "$1"
   if [[ $? -ne 0 ]]; then
     echo "Error executing SQL: $1"
     exit 1
