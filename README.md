@@ -114,19 +114,20 @@ Only perform this if this is the first time you will setup your Git Environment
       - Open `insert_students`.sql in a text editor.
       - Create the Database:
       ```SQL
-      -- Step 1: Insert student records into the Students table
-      INSERT INTO Students (FirstName, LastName, EnrollmentDate, Email)  -- StudentID is auto-incremented
+      -- Step 1: Insert student records into the `Students` table
+      INSERT INTO `Students` (`FirstName`, `LastName`, `EnrollmentDate`, `Email`)  -- StudentID is auto-incremented
       VALUES
       ('Alice', 'Smith', '2023-09-01', 'alice.smith@example.com'),
       ('Bob', 'Johnson', '2023-09-01', 'bob.johnson@example.com'),
       ('Charlie', 'Lee', '2023-09-01', 'charlie.lee@example.com');
-      
+
       -- Alternative (if StudentID is NOT auto-incremented and you manage the IDs yourself):
-      -- INSERT INTO Students (StudentID, FirstName, LastName, EnrollmentDate, Email)
+      -- INSERT INTO `Students` (StudentID, `FirstName`, `LastName`, `EnrollmentDate`, `Email`)
       -- VALUES
       --     (1, 'Alice', 'Smith', '2023-09-01', 'alice.smith@example.com'),
       --     (2, 'Bob', 'Johnson', '2023-09-01', 'bob.johnson@example.com'),
       --     (3, 'Charlie', 'Lee', '2023-09-01', 'charlie.lee@example.com');
+
       ```
       
       - Important Note: Because `StudentID` is (or should be) an auto-incrementing primary key, you generally should not include it in the `INSERT` statement's column list. The database will automatically assign the next available ID. The alternative example is only provided for the rare case that you are managing the primary keys yourself.
@@ -138,14 +139,15 @@ Only perform this if this is the first time you will setup your Git Environment
       - Update Bob Johnson's email:
       ```SQL
       -- Step 2: Update the Email for Bob Johnson
-      UPDATE Students
-      SET Email = 'bob.j@example.com'
-      WHERE FirstName = 'Bob' AND LastName = 'Johnson';  -- More robust WHERE clause
-      
+      UPDATE `Students`
+      SET `Email` = 'bob.j@example.com'
+      WHERE `FirstName` = 'Bob' AND `LastName` = 'Johnson';  -- More robust WHERE clause
+
       -- Alternative using StudentID (preferred if you know the ID):
-      -- UPDATE Students
-      -- SET Email = 'bob.j@example.com'
-      -- WHERE StudentID = 2;  -- Replace 2 with Bob's actual StudentID
+      -- UPDATE `Students`
+      -- SET `Email` = 'bob.j@example.com'
+      -- WHERE `StudentID` = 2;  -- Replace 2 with Bob's actual StudentID
+
       ```
       - Important Note: It's generally better practice to use the `StudentID` in the `WHERE` clause of an `UPDATE` statement if you know it. This is because it is the primary key and is guaranteed to be unique. Using other columns (like FirstName and LastName) might accidentally update multiple rows if there are duplicate names.
       - Save the `update_student_email.sql` file.
@@ -155,12 +157,13 @@ Only perform this if this is the first time you will setup your Git Environment
       - Delete Charlie Lee's record:
       ```SQL
       -- Step 3: Delete the record for Charlie Lee
-      DELETE FROM Students
-      WHERE FirstName = 'Charlie' AND LastName = 'Lee'; -- More robust WHERE clause
-      
+      DELETE FROM `Students`
+      WHERE `FirstName` = 'Charlie' AND `LastName` = 'Lee'; -- More robust WHERE clause
+
       -- Alternative using StudentID (preferred if you know the ID):
-      -- DELETE FROM Students
-      -- WHERE StudentID = 3;  -- Replace 3 with Charlie's actual StudentID
+      -- DELETE FROM `Students`
+      -- WHERE `StudentID` = 3;  -- Replace 3 with Charlie's actual StudentID
+
       ```
       - Important Note: Similar to the `UPDATE` statement, it's best practice to use the `StudentID` in the `WHERE` clause of a `DELETE` statement to ensure you're deleting the correct record.
       - Save the `delete_student.sql` file.
