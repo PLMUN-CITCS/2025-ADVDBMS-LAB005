@@ -1,7 +1,7 @@
-2025-ADVDBMS-WK02S02E03
+# **2025-ADVDBMS-LAB005**
 Week 02 - Review on Database Concepts
 
-Exercise # 03 - Guided Coding Exercise: Inserting, Updating, and Deleting Records
+Laboratory # 05 - Guided Coding Exercise: Inserting, Updating, and Deleting Records
 
 ## **Instructions**
 
